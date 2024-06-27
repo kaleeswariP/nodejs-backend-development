@@ -1,6 +1,736 @@
-# nodejs-guidelines
+# nodejs-backend-development
+
+* [What is Node JS]()
+* [Express Js framework]()
+    * [Middleware]()
+    * [Routing]()
+    * [Template Engines]()
+    * [Static Files]()
+    * [Error handling]()
+    * [Extensible]()
+* [RESTFUl APIs]()
+    * [Key concepts]()
+    * [Example with express-js]()
+    * [Best practices]()
+* [Core concepts]()
+    * [Http API call Structure]()
+        * [Header]()
+        * [Request]()
+        * [Response]()
+        * [Status codes]()
+* [Core Modules]()
+    * [HTTP]()
+    * [fs]()
+    * [path]()
+    * [os]()
+    * [events]()
+    * [URL]()
+    * [crypto]()
+    * [stream]()
+* [Real-time Scenarios]()
+    * [Types of middleware - express-js]()
+* [Websockets]()
+* [Coding challenges/tasks]()
+    * [Sample node js application with express-js framework]()
+    * [JWT Token Implementation]()
+
+## What is Node JS
+Node.js is a powerful, open-source, cross-platform runtime environment that allows you to execute JavaScript code outside of a web browser.
+
+Node.js is designed to build scalable network applications and allows developers to use JavaScript for server-side scripting, creating dynamic web page content before the page is sent to the user's web browser.
+
+**Key Features**
+
+**Event-Driven and Non-Blocking I/O:**
+
+Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices.
+
+The non-blocking I/O model means that Node.js can handle multiple requests at the same time without waiting for any function to complete.
 
 
+**Single Programming Language:**
+
+With Node.js, both client-side and server-side scripts can be written in JavaScript, which simplifies the development process and allows for the use of the same language across the entire stack.
+
+
+**Package Manager (npm):**
+
+Node.js comes with npm (Node Package Manager), which is a large ecosystem of open-source libraries and packages that can be easily installed and used in your applications.
+
+
+**Fast Performance:**
+
+Since Node.js is built on the V8 engine, it compiles JavaScript to machine code and executes it at high speed, making it very performant for server-side operations.
+
+
+**Scalability:**
+
+Node.js is designed with scalability in mind, making it possible to build applications that can handle a large number of simultaneous connections with high throughput.
+
+**Use Cases of Node Js**
+
+**Real-Time Applications:**
+
+* Node.js is well-suited for applications that require real-time interaction, such as chat applications, online gaming, collaborative tools, and live data streaming.
+
+**API Servers:**
+
+* Node.js can be used to create RESTful APIs that handle a large number of client requests efficiently, making it a popular choice for building backend services.
+  
+**Microservices:**
+
+* Due to its lightweight nature, Node.js is often used in microservices architectures where small, independent services communicate with each other.
+  
+**Single-Page Applications (SPAs):**
+
+* Node.js can be used in conjunction with front-end frameworks like React, Angular, or Vue.js to build SPAs that provide a seamless user experience.
+
+**IoT Applications:**
+
+* Node.js's event-driven architecture makes it suitable for Internet of Things (IoT) applications that require handling a large number of events from various devices.
+
+# Express JS framework
+
+Express.js is a minimal and flexible Node.js web application framework that provides a robust set of features to develop web and mobile applications.
+
+It simplifies the process of building web applications and APIs by providing a layer of fundamental web application features without obscuring the functionality of Node.js. 
+
+Express.js is known for its performance and ease of use, making it one of the most popular frameworks for building server-side applications with Node.js.
+
+**Key Features**
+
+  * [Middleware]()
+  * [Routing]()
+  * [Template Engines]()
+  * [Static Files]()
+  * [Error handling]()
+  * [Extensible]()
+
+
+## Middleware:
+Middleware functions access to the request object `(`req`)`, the response object `(`res`)`, and the next middleware function in the application's request-response cycle.
+
+They can execute code, change the request and response objects, end the request-response cycle, and call the next middleware function.
+
+Middleware is used extensively in Express.js to handle various tasks such as logging, authentication, parsing request bodies, and more.
+
+```javascript
+
+const express = require('express');
+const app = express();
+
+// A simple middleware function
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+
+```
+
+## Routing
+Express.js provides a powerful routing mechanism that allows you to define routes for different HTTP methods and URL patterns. 
+
+Routes can be parameterized to capture dynamic values from the URL.
+
+```javascript
+const express = require('express');
+const app = express();
+
+// Define a route for GET requests to the root URL
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
+
+// Define a route with a URL parameter
+app.get('/user/:id', (req, res) => {
+  res.send(`User ID: ${req.params.id}`);
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+
+```
+
+## Template Engines
+Express.js supports various template engines like Pug, EJS, and Handlebars, which allow you to generate HTML dynamically based on your application's data.
+
+```javascript
+const express = require('express');
+const app = express();
+const path = require('path');
+
+// Set Pug as the template engine
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
+app.get('/', (req, res) => {
+  res.render('index', { title: 'Express', message: 'Hello World!' });
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+
+```
+
+## Static Files
+Express.js allows you to serve static files such as images, CSS, and JavaScript files from a directory using the  `express.static` middleware.
+
+```javascript
+const express = require('express');
+const app = express();
+const path = require('path');
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+
+```
+
+## Error Handling
+Express.js provides a simple mechanism for handling errors. Middleware functions that take four arguments (err, req, res, next) are recognized as error-handling middleware.
+
+```javascript
+const express = require('express');
+const app = express();
+
+// A simple route
+app.get('/', (req, res) => {
+  throw new Error('Something went wrong!');
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+
+```
+## Extensible
+Express.js can be easily extended with various third-party middleware and libraries to add functionality such as authentication, validation, and more.
+
+**Example Application**
+
+Source Code Path: 
+
+```javascript
+const express = require('express');
+const path = require('path');
+const app = express();
+
+// Middleware to log requests
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Define routes
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
+
+app.post('/submit', (req, res) => {
+  res.send('Form Submitted');
+});
+
+app.put('/update', (req, res) => {
+  res.send('Update Received');
+});
+
+app.delete('/delete', (req, res) => {
+  res.send('Delete Request Received');
+});
+
+// Start the server
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+
+```
+
+# RESTFul APIs
+
+   * [Key concepts]()
+   * [Example with express-js]()
+   * [Best practices]()
+
+RESTful APIs (Representational State Transfer APIs) are a type of web service that adhere to the principles and constraints of REST, an architectural style for designing networked applications.
+
+RESTful APIs use standard HTTP methods and status codes and are designed to be stateless, scalable, and easy to interact with using URLs.
+
+They are widely used for building web services that communicate over HTTP/HTTPS.
+
+## Key Concepts of RESTful APIs
+
+### Resources
+Everything in a RESTful API is considered a resource. Resources are identified by URLs `(Uniform Resource Locators)`. 
+
+For example, in an e-commerce application, resources could be products, orders, users, etc.
+
+### HTTP Methods:
+
+RESTful APIs use standard HTTP methods to perform operations on resources:
+* GET: Retrieve a resource.
+* POST: Create a new resource.
+* PUT: Update an existing resource.
+* DELETE: Remove a resource.
+* PATCH: Partially update an existing resource.
+
+### Stateless:
+Each request from a client to a server must contain all the information needed to understand and process the request. 
+
+The server does not store any state of the client session.
+
+### Representation
+
+Resources can be represented in different formats such as JSON (most common), XML, HTML, or plain text.
+
+The client and server negotiate the format using HTTP headers like `Accept` and `Content-Type`.
+
+### Uniform Interface:
+
+A uniform interface between client and server simplifies the architecture. This includes using standardized URIs, HTTP methods, status codes, and headers.
+
+### Client-Server Architecture:
+
+The client and server are separated and interact through requests and responses. This separation allows for the independent evolution of the client and server.
+
+### Cacheable:
+
+Responses must be defined as cacheable or non-cacheable to improve performance and reduce server load. Caching can be controlled using HTTP headers like Cache-Control.
+
+## Example of RESTful API
+Consider an example of a simple RESTful API for managing a collection of books.
+
+Resource URIs
+* **GET /books:** Retrieve a list of all books.
+* **GET /books/{id}:** Retrieve a specific book by ID.
+* **POST /books:** Create a new book.
+* **PUT /books/{id}:** Update an existing book by ID.
+* **DELETE /books/{id}:** Delete a specific book by ID.
+
+Example API Implementation (using Express.js)
+
+```javascript
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+let books = [
+  { id: 1, title: '1984', author: 'George Orwell' },
+  { id: 2, title: 'To Kill a Mockingbird', author: 'Harper Lee' }
+];
+
+// GET /books
+app.get('/books', (req, res) => {
+  res.json(books);
+});
+
+// GET /books/:id
+app.get('/books/:id', (req, res) => {
+  const book = books.find(b => b.id === parseInt(req.params.id));
+  if (!book) return res.status(404).send('Book not found');
+  res.json(book);
+});
+
+// POST /books
+app.post('/books', (req, res) => {
+  const book = {
+    id: books.length + 1,
+    title: req.body.title,
+    author: req.body.author
+  };
+  books.push(book);
+  res.status(201).json(book);
+});
+
+// PUT /books/:id
+app.put('/books/:id', (req, res) => {
+  const book = books.find(b => b.id === parseInt(req.params.id));
+  if (!book) return res.status(404).send('Book not found');
+
+  book.title = req.body.title;
+  book.author = req.body.author;
+  res.json(book);
+});
+
+// DELETE /books/:id
+app.delete('/books/:id', (req, res) => {
+  const bookIndex = books.findIndex(b => b.id === parseInt(req.params.id));
+  if (bookIndex === -1) return res.status(404).send('Book not found');
+
+  books.splice(bookIndex, 1);
+  res.status(204).send();
+});
+
+// Start the server
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+
+```
+
+## RESTful API Design Best Practices
+
+1. **Use nouns for resource names:** Use nouns instead of verbs in endpoint paths `(e.g., `/users` instead of `/getUsers`)`.<br>
+
+2. **Use HTTP status codes appropriately:** Return the appropriate status code based on the outcome of the request `(e.g., `200 OK`, `201 Created`, `400 Bad Request`, `404 Not Found`, `500 Internal Server Error`)`.<br>
+
+3. **Versioning:** Implement versioning in your API to manage changes over time `(e.g., `/v1/books`)`.<br>
+
+4. **Documentation:** Provide clear and comprehensive documentation for your API, including available endpoints, request/response formats, and examples.<br>
+
+5. **Security:** Implement authentication and authorization mechanisms to protect your API. Use HTTPS to encrypt data transmitted between client and server.<br>
+
+6. **Pagination:** Use pagination for endpoints that return large lists of resources to improve performance and usability `(e.g., `/books?page=1&limit=10`)`.<br>
+
+
+# Core concepts
+  * [Modules]()
+  * [Event loop]()
+  * [Asynchronous Programming]()
+## Modules
+Node.js uses a module system to organize code into reusable components. Each file in a Node.js application is considered a module, and modules can be imported and exported using the `require` and `module.exports` syntax.
+
+```javascript
+// math.js
+function add(a, b) {
+  return a + b;
+}
+module.exports = add;
+
+// main.js
+const add = require('./math');
+console.log(add(2, 3)); // 5
+```
+
+## Event loop
+
+The event loop is a key part of Node.js that allows it to perform non-blocking I/O operations.
+
+It continuously checks for events and executes the appropriate callback functions, allowing Node.js to handle multiple operations concurrently.
+
+## Asynchronous Programming
+
+Node.js heavily relies on asynchronous programming. Instead of waiting for operations like file reading or database queries to complete, Node.js continues executing the next line of code and handles the result through callbacks, promises, or async/await syntax.
+
+```javascript
+const fs = require('fs');
+
+// Using a callback
+fs.readFile('example.txt', 'utf8', (err, data) => {
+  if (err) throw err;
+  console.log(data);
+});
+
+// Using a promise
+const readFile = (file) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(file, 'utf8', (err, data) => {
+      if (err) reject(err);
+      resolve(data);
+    });
+  });
+};
+
+readFile('example.txt')
+  .then(data => console.log(data))
+  .catch(err => console.error(err));
+
+// Using async/await
+const readAsync = async (file) => {
+  try {
+    const data = await readFile(file);
+    console.log(data);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+readAsync('example.txt');
+```
+
+# Core Modules of Node JS
+    * [HTTP]()
+    * [fs]()
+    * [path]()
+    * [os]()
+    * [events]()
+    * [URL]()
+    * [crypto]()
+    * [stream]()
+
+## HTTP: `http`
+The `http` module provides utilities to create HTTP servers and clients. It's fundamental for building web applications and APIs.
+
+While using the `express-js` framework, then we will it's a way to create a server in node js i.e., we don't create a server using the `http` module directly.
+
+**Key features**
+
+Creating an HTTP server:
+
+```javascript
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello World\n');
+});
+
+server.listen(3000, '127.0.0.1', () => {
+  console.log('Server running at http://127.0.0.1:3000/');
+});
+
+```
+Making HTTP requests:
+
+```javascript
+const http = require('http');
+
+const options = {
+  hostname: 'example.com',
+  port: 80,
+  path: '/',
+  method: 'GET'
+};
+
+const req = http.request(options, (res) => {
+  let data = '';
+
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  res.on('end', () => {
+    console.log(data);
+  });
+});
+
+req.on('error', (e) => {
+  console.error(`Problem with request: ${e.message}`);
+});
+
+req.end();
+```
+
+## FS module: `fs`
+The `fs` module provides an API for interacting with the file system in a manner closely modeled around standard POSIX functions.
+
+**Key Features**
+Reading a file:
+
+```javascript
+const fs = require('fs');
+
+fs.readFile('example.txt', 'utf8', (err, data) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log(data);
+});
+```
+Writing to a file:
+
+```javascript
+const fs = require('fs');
+
+const content = 'Some content to write to the file';
+
+fs.writeFile('example.txt', content, (err) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log('File written successfully');
+});
+```
+
+Watching a file:
+
+```javascript
+const fs = require('fs');
+
+fs.watch('example.txt', (eventType, filename) => {
+  console.log(`File ${filename} has changed. Event type: ${eventType}`);
+});
+
+```
+## PATH module: `path`
+The `path` module provides utilities for working
+with file and directory paths. It helps in resolving and manipulating file paths in a cross-platform way.
+
+**Key Features**
+Joining paths, Getting the directory name, and Getting the file extension.
+
+```javascript
+const path = require('path');
+
+const fullPath = path.join('/users', 'john', 'docs', 'file.txt');
+console.log(fullPath); // /users/john/docs/file.txt
+
+const dirName = path.dirname('/users/john/docs/file.txt');
+console.log(dirName); // /users/john/docs
+
+const ext = path.extname('file.txt');
+console.log(ext); // .txt
+
+```
+
+## OS Module: `os`
+The `os` module provides operating system-related utility methods and properties. It allows you to interact with the underlying operating system.
+
+**Key Features**
+Getting the hostname, Getting system memory information, and Getting network interfaces.
+
+```javascript
+const os = require('os');
+
+const hostname = os.hostname();
+console.log(hostname); // Example: my-computer.local
+
+const freeMemory = os.freemem();
+const totalMemory = os.totalmem();
+console.log(`Free Memory: ${freeMemory}`);
+console.log(`Total Memory: ${totalMemory}`);
+
+const networkInterfaces = os.networkInterfaces();
+console.log(networkInterfaces);
+```
+
+## Events Module: `events`
+
+The `events` module provides a way to work with events and event-driven programming. It's the foundation of the event system in Node.js.
+
+**Key Features**
+
+Creating an event emitter:
+
+```javascript
+const EventEmitter = require('events');
+
+class MyEmitter extends EventEmitter {}
+
+const myEmitter = new MyEmitter();
+
+myEmitter.on('event', () => {
+  console.log('An event occurred!');
+});
+
+myEmitter.emit('event');
+```
+
+Handling multiple events:
+
+```javascript
+const EventEmitter = require('events');
+
+class MyEmitter extends EventEmitter {}
+
+const myEmitter = new MyEmitter();
+
+myEmitter.on('event', (arg1, arg2) => {
+  console.log(`An event occurred with arguments: ${arg1}, ${arg2}`);
+});
+
+myEmitter.emit('event', 'arg1', 'arg2');
+```
+
+## URL Module: `url`
+The `url` module provides utilities for URL resolution and parsing. It helps in handling URL strings easily.
+
+**Key Features**
+Parsing a URL, Formatting a URL.
+
+```javascript
+const url = require('url');
+
+const parsedUrl = url.parse('https://example.com:8080/path/name?query=string#hash');
+console.log(parsedUrl);
+
+const formattedUrl = url.format({
+  protocol: 'https',
+  hostname: 'example.com',
+  port: 8080,
+  pathname: '/path/name',
+  query: { query: 'string' },
+  hash: '#hash'
+});
+console.log(formattedUrl); // 'https://example.com:8080/path/name?query=string#hash'
+```
+
+## Crypto Module: `crypto`
+The `crypto` module provides cryptographic functionality that includes a set of wrappers for OpenSSL's hash, HMAC, cipher, decipher, sign, and verify functions.
+
+**Key Features**
+Hashing data, Generating random bytes.
+
+```javascript
+const crypto = require('crypto');
+
+const hash = crypto.createHash('sha256');
+hash.update('some data to hash');
+console.log(hash.digest('hex'));
+
+crypto.randomBytes(16, (err, buffer) => {
+  if (err) throw err;
+  console.log(buffer.toString('hex'));
+});
+
+```
+
+## Stream Module: `stream`
+The stream module provides a way to work with streaming data. Streams can be readable, writable, or both (duplex).
+
+**Key Features**
+Creating a readable stream:
+
+```javascript
+const { Readable } = require('stream');
+
+const readable = new Readable({
+  read(size) {
+    this.push('Hello, World!');
+    this.push(null); // No more data
+  }
+});
+
+readable.pipe(process.stdout);
+```
+Creating a writable stream:
+
+```javascript
+const { Writable } = require('stream');
+
+const writable = new Writable({
+  write(chunk, encoding, callback) {
+    console.log(chunk.toString());
+    callback();
+  }
+});
+
+process.stdin.pipe(writable);
+```
 
 ## HTTP Status Codes
 
