@@ -19,13 +19,17 @@
 * [Core concepts](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#core-concepts)
   * [Modules](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#modules)
   * [Event loop](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#event-loop)
-  * [Asynchronous programming](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#asynchronous-programming)
+  * [Asynchronous programming](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#asynchronous-programming) [asynchronous-programming-1](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#asynchronous-programming-1)
+  * [Worker Threads/processes]()
+  * [Cluster Module]()
+
+* [APIs in NodeJS]()
   * [Http API call Structure]()
      * [Header]()
      * [Request]()
      * [Response]()
      * [Status codes]()
-       
+      
 * [Core Modules]()
    * [HTTP](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#http-http)
    * [fs](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#fs-module-fs)
@@ -36,9 +40,9 @@
    * [crypto](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#crypto-module-crypto)
    * [stream](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#stream-module-stream)
 
+* [Design Patterns]()
 * [Node JS Project]()     
 * [Real-time Scenarios]()
-   * [Worker process]()
 * [Questions & Answers]()
     * [Types of middleware - express-js]()
     * []()
@@ -237,12 +241,12 @@ Express.js is known for its performance and ease of use, making it one of the mo
 
 **Key Features**
 
- * [Middleware[]()](https://github.com/kaleeswariP/nodejs-backend-development#middleware)
- * [Routing](https://github.com/kaleeswariP/nodejs-backend-development#routing)
- * [Template Engines](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#template-engines)
- * [Static Files](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#static-files)
- * [Error handling](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#error-handling)
- * [Extensible](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#extensible)
+* [Middleware](https://github.com/kaleeswariP/nodejs-backend-development#middleware)
+* [Routing](https://github.com/kaleeswariP/nodejs-backend-development#routing)
+* [Template Engines](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#template-engines)
+* [Static Files](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#static-files)
+* [Error handling](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#error-handling)
+* [Extensible](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#extensible)
 
 
 ## Middleware:
@@ -252,7 +256,7 @@ They can execute code, change the request and response objects, end the request-
 
 Middleware is used extensively in Express.js to handle various tasks such as logging, authentication, parsing request bodies, and more.
 
-Refer - [Types of middleware in expressjs]()
+Refer - [Types of middleware in expressjs](https://github.com/kaleeswariP/nodejs-backend-development/edit/master/README.md#1-types-of-middlewares-available-in-express-js)
 
 ```javascript
 
@@ -409,9 +413,9 @@ app.listen(3000, () => {
 
 # RESTFul APIs
 
-    * [Key concepts](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#key-concepts-of-restful-apis)
-    * [Example with express-js](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#example-of-restful-api)
-    * [Best practices](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#restful-api-design-best-practices)
+* [Key concepts](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#key-concepts-of-restful-apis)
+* [Example with express-js](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#example-of-restful-api)
+* [Best practices](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#restful-api-design-best-practices)
 
 RESTful APIs (Representational State Transfer APIs) are a type of web service that adhere to the principles and constraints of REST, an architectural style for designing networked applications.
 
@@ -545,10 +549,11 @@ app.listen(3000, () => {
 
 
 # Core concepts
-  * [Modules](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#modules)
-  * [Event loop](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#event-loop)
-  * [Asynchronous Programming](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#asynchronous-programming)
-  * [Http API call Structure]()
+
+* [Modules](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#modules)
+* [Event loop](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#event-loop)
+* [Asynchronous Programming](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#asynchronous-programming)
+  
 ## Modules
 Node.js uses a module system to organize code into reusable components. Each file in a Node.js application is considered a module, and modules can be imported and exported using the `require` and `module.exports` syntax.
 
@@ -611,14 +616,15 @@ readAsync('example.txt');
 ```
 
 # Core Modules of Node JS
-    * [HTTP](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#http-http)
-    * [fs](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#fs-module-fs)
-    * [path](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#path-module-path)
-    * [os](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#os-module-os)
-    * [events](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#events-module-events)
-    * [URL](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#url-module-url)
-    * [crypto](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#crypto-module-crypto)
-    * [stream](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#stream-module-stream)
+
+* [HTTP](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#http-http)
+* [fs](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#fs-module-fs)
+* [path](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#path-module-path)
+* [os](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#os-module-os)
+* [events](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#events-module-events)
+* [URL](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#url-module-url)
+* [crypto](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#crypto-module-crypto)
+* [stream](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#stream-module-stream)
 
 ## HTTP: `http`
 The `http` module provides utilities to create HTTP servers and clients. It's fundamental for building web applications and APIs.
