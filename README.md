@@ -1,40 +1,53 @@
 # nodejs-backend-development
 
-* [What is Node JS]()
-* [Express Js framework]()
-    * [Middleware]()
-    * [Routing]()
-    * [Template Engines]()
-    * [Static Files]()
-    * [Error handling]()
-    * [Extensible]()
-* [RESTFUl APIs]()
-    * [Key concepts]()
-    * [Example with express-js]()
-    * [Best practices]()
-* [Core concepts]()
-    * [Http API call Structure]()
-        * [Header]()
-        * [Request]()
-        * [Response]()
-        * [Status codes]()
+* [What is Node JS](https://github.com/kaleeswariP/nodejs-backend-development#what-is-node-js)
+* [Concurrency in javascript and node Js]()
+* [NPM - Node Package Manager]()
+* [Express Js framework](https://github.com/kaleeswariP/nodejs-backend-development#express-js-framework)
+    * [Middleware](https://github.com/kaleeswariP/nodejs-backend-development#middleware)
+    * [Routing](https://github.com/kaleeswariP/nodejs-backend-development#routing)
+    * [Template Engines](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#template-engines)
+    * [Static Files](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#static-files)
+    * [Error handling](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#error-handling)
+    * [Extensible](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#extensible)
+      
+* [RESTFUl APIs](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#restful-apis)
+    * [Key concepts](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#key-concepts-of-restful-apis)
+    * [Example with express-js](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#example-of-restful-api)
+    * [Best practices](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#restful-api-design-best-practices)
+      
+* [Core concepts](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#core-concepts)
+  * [Modules](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#modules)
+  * [Event loop](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#event-loop)
+  * [Asynchronous programming](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#asynchronous-programming)
+  * [Http API call Structure]()
+     * [Header]()
+     * [Request]()
+     * [Response]()
+     * [Status codes]()
+       
 * [Core Modules]()
-    * [HTTP]()
-    * [fs]()
-    * [path]()
-    * [os]()
-    * [events]()
-    * [URL]()
-    * [crypto]()
-    * [stream]()
+   * [HTTP](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#http-http)
+   * [fs](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#fs-module-fs)
+   * [path](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#path-module-path)
+   * [os](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#os-module-os)
+   * [events](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#events-module-events)
+   * [URL](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#url-module-url)
+   * [crypto](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#crypto-module-crypto)
+   * [stream](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#stream-module-stream)
+
+* [Node JS Project]()     
 * [Real-time Scenarios]()
+   * [Worker process]()
+* [Questions & Answers]()
     * [Types of middleware - express-js]()
+    * []()
 * [Websockets]()
 * [Coding challenges/tasks]()
     * [Sample node js application with express-js framework]()
     * [JWT Token Implementation]()
 
-## What is Node JS
+# What is Node JS
 Node.js is a powerful, open-source, cross-platform runtime environment that allows you to execute JavaScript code outside of a web browser.
 
 Node.js is designed to build scalable network applications and allows developers to use JavaScript for server-side scripting, creating dynamic web page content before the page is sent to the user's web browser.
@@ -89,6 +102,131 @@ Node.js is designed with scalability in mind, making it possible to build applic
 
 * Node.js's event-driven architecture makes it suitable for Internet of Things (IoT) applications that require handling a large number of events from various devices.
 
+# Concurrency execution in Node Js and Javascript
+
+*Concurrency in Node.js and JavaScript is achieved through a combination of asynchronous programming, the event loop, and (in the case of Node.js) the use of a thread pool.*
+
+## Single-Threaded Execution
+
+Single-threaded execution means that JavaScript, whether running in a browser or in Node.js, operates on a single main thread. 
+
+This single thread is responsible for executing all the code, including handling events, running functions, and managing asynchronous operations.
+
+## Asynchronous programming
+
+Asynchronous programming is the cornerstone of achieving concurrency in a single-threaded environment like JavaScript.
+
+It allows the execution of non-blocking operations, enabling the main thread to handle multiple tasks seemingly at the same time.
+
+The primary tools for asynchronous programming in JavaScript are:
+
+* **Callbacks:** Functions passed as arguments to other functions to be executed later.
+  
+* **Promises:** Objects representing the eventual completion (or failure) of an asynchronous operation and its resulting value.
+  
+* **Async/Await:** Syntactic sugar over promises, making asynchronous code look and behave more like synchronous code.
+
+## Event loop
+
+The event loop is a fundamental mechanism in both the browser and Node.js that manages asynchronous operations.
+
+ It allows JavaScript to perform non-blocking I/O operations despite being single-threaded.
+
+**How the Event Loop Works:**
+
+* **Call Stack:** Contains the currently executing code.
+  
+* **Event Queue:** Contains tasks (callbacks, events) to be executed.
+  
+* **Microtask Queue:** Contains microtasks (promise resolutions, mutation observer callbacks) which have higher priority than tasks in the event queue.
+  
+* **Event Loop:** Continuously checks the call stack, event queue, and microtask queue. It processes microtasks first, then tasks, and then continues to the next event loop tick.
+
+## Concurrency in the Browser
+In the browser, concurrency is handled through the **event loop** and **Web APIs**. 
+
+When an asynchronous operation (like a network request or a timer) is initiated, it’s handled by the browser’s Web API. 
+
+Once the operation completes, the callback is pushed onto the event queue and executed when the call stack is clear.
+
+Example:
+```javascript
+console.log('Start');
+
+setTimeout(() => {
+  console.log('Timeout');
+}, 1000);
+
+console.log('End');
+
+// Ouput
+
+// Start
+// End
+// Timeout
+
+```
+
+## Concurrency in Node.js
+
+Node.js extends JavaScript’s concurrency model with additional features like the thread pool, provided by the libuv library, to handle I/O-bound tasks efficiently.
+
+**Key Components:**
+
+* **Event Loop:** Similar to the browser, it handles asynchronous operations and ensures non-blocking execution.
+  
+* **Thread Pool:** Used for executing heavy I/O operations (like file system access, DNS lookup, etc.) in parallel, preventing these operations from blocking the event loop.
+
+Example with Thread Pool:
+
+Consider a file read operation in Node.js:
+
+```javascript
+const fs = require('fs');
+
+console.log('Start');
+
+fs.readFile('file.txt', 'utf8', (err, data) => {
+  if (err) throw err;
+  console.log('File content:', data);
+});
+
+console.log('End');
+
+// Ouput
+// Start
+// End
+// File content: (content of file.txt)
+
+```
+Here’s what happens:
+
+1. Start is logged.
+2. The fs.readFile operation is offloaded to the thread pool.
+3. End is logged.
+4. When the file read operation completes, the callback is pushed onto the event queue.
+5. The event loop picks up the callback and logs the file content.
+
+**Additional Mechanisms in Node.js**<br>
+
+* Cluster Module: Allows forking the main process to utilize multiple CPU cores.
+
+* Worker Threads: Provides a way to run JavaScript code in parallel in multiple threads. This is particularly useful for CPU-bound tasks.
+
+## Conclusion
+
+Concurrency in JavaScript (both in the browser and Node.js) is primarily achieved through:
+
+* **Asynchronous Programming:** Using callbacks, promises, and async/await to handle non-blocking operations.
+  
+* **Event Loop:** Manages the execution of asynchronous tasks and ensures the main thread is never blocked.
+
+* **Thread Pool (Node.js):** Handles I/O-bound operations, allowing parallel execution of heavy tasks.
+
+* **Cluster and Worker Threads (Node.js):** Allow for better CPU utilization for CPU-bound tasks.
+
+# NPM - Node Package Manager
+
 # Express JS framework
 
 Express.js is a minimal and flexible Node.js web application framework that provides a robust set of features to develop web and mobile applications.
@@ -99,20 +237,22 @@ Express.js is known for its performance and ease of use, making it one of the mo
 
 **Key Features**
 
-  * [Middleware]()
-  * [Routing]()
-  * [Template Engines]()
-  * [Static Files]()
-  * [Error handling]()
-  * [Extensible]()
+ * [Middleware[]()](https://github.com/kaleeswariP/nodejs-backend-development#middleware)
+ * [Routing](https://github.com/kaleeswariP/nodejs-backend-development#routing)
+ * [Template Engines](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#template-engines)
+ * [Static Files](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#static-files)
+ * [Error handling](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#error-handling)
+ * [Extensible](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#extensible)
 
 
 ## Middleware:
-Middleware functions access to the request object `(`req`)`, the response object `(`res`)`, and the next middleware function in the application's request-response cycle.
+Middleware functions access the request object `(req)`, the response object `(res)`, and the next middleware function in the application's request-response cycle.
 
 They can execute code, change the request and response objects, end the request-response cycle, and call the next middleware function.
 
 Middleware is used extensively in Express.js to handle various tasks such as logging, authentication, parsing request bodies, and more.
+
+Refer - [Types of middleware in expressjs]()
 
 ```javascript
 
@@ -269,9 +409,9 @@ app.listen(3000, () => {
 
 # RESTFul APIs
 
-   * [Key concepts]()
-   * [Example with express-js]()
-   * [Best practices]()
+    * [Key concepts](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#key-concepts-of-restful-apis)
+    * [Example with express-js](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#example-of-restful-api)
+    * [Best practices](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#restful-api-design-best-practices)
 
 RESTful APIs (Representational State Transfer APIs) are a type of web service that adhere to the principles and constraints of REST, an architectural style for designing networked applications.
 
@@ -405,9 +545,10 @@ app.listen(3000, () => {
 
 
 # Core concepts
-  * [Modules]()
-  * [Event loop]()
-  * [Asynchronous Programming]()
+  * [Modules](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#modules)
+  * [Event loop](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#event-loop)
+  * [Asynchronous Programming](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#asynchronous-programming)
+  * [Http API call Structure]()
 ## Modules
 Node.js uses a module system to organize code into reusable components. Each file in a Node.js application is considered a module, and modules can be imported and exported using the `require` and `module.exports` syntax.
 
@@ -470,14 +611,14 @@ readAsync('example.txt');
 ```
 
 # Core Modules of Node JS
-    * [HTTP]()
-    * [fs]()
-    * [path]()
-    * [os]()
-    * [events]()
-    * [URL]()
-    * [crypto]()
-    * [stream]()
+    * [HTTP](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#http-http)
+    * [fs](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#fs-module-fs)
+    * [path](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#path-module-path)
+    * [os](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#os-module-os)
+    * [events](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#events-module-events)
+    * [URL](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#url-module-url)
+    * [crypto](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#crypto-module-crypto)
+    * [stream](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#stream-module-stream)
 
 ## HTTP: `http`
 The `http` module provides utilities to create HTTP servers and clients. It's fundamental for building web applications and APIs.
@@ -731,6 +872,102 @@ const writable = new Writable({
 
 process.stdin.pipe(writable);
 ```
+
+# Real-time Scenarios:
+
+# Questions & Answers
+
+## 1. Types of middlewares available in express-js
+
+In Express.js, middleware functions are pieces of code that execute during the lifecycle of a request to a web server. 
+
+These functions can perform a variety of tasks, such as modifying the request or response objects, ending the request-response cycle, or calling the next middleware function in the stack.
+
+Here are the main types of middleware available in Express.js:
+* Built-in Middleware
+* Third-party Middleware
+* Application-level Middleware
+* Router-level Middleware
+* Error-handling Middleware
+* Custom Middleware
+
+### Built-in Middleware:
+
+* `express.json()`: Parses incoming requests with JSON payloads.
+
+* `express.urlencoded()`: Parses incoming requests with URL-encoded payloads.
+
+* `express.static()`: Serves static files, such as images, CSS files, and JavaScript files.
+
+### Third-party Middleware:
+
+* `body-parser`: Parses incoming request bodies in a middleware before your handlers, available under the `req.body` property.
+
+* `cookie-parser`: Parses cookies attached to the client request object.
+
+* `morgan`: Logs request details.
+
+* `cors`: Enables Cross-Origin Resource Sharing (CORS) with various options.
+
+* `helmet`: Helps secure Express apps by setting various HTTP headers.
+
+* `multer`: Handles `multipart/form-data`, which is primarily used for uploading files.
+
+### Application-level Middleware:
+These middleware functions are bound to an instance of the Express app using `app.use()` or `app.METHOD()`.
+
+```javascript
+app.use(function (req, res, next) {
+  console.log('Time:', Date.now());
+  next();
+});
+
+app.get('/user/:id', function (req, res, next) {
+  console.log('Request Type:', req.method);
+  next();
+});
+```
+
+Router-level Middleware:
+These middleware functions are bound to an instance of express.Router().
+
+```javascript
+const router = express.Router();
+
+router.use(function (req, res, next) {
+  console.log('Router Middleware');
+  next();
+});
+
+router.get('/user/:id', function (req, res, next) {
+  res.send('User Info');
+});
+
+app.use('/api', router);
+```
+
+### Error-handling Middleware:
+These middleware functions take four arguments: (err, req, res, next). They are used to catch and handle errors.
+
+```javascript
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
+```
+### Custom Middleware:
+You can define your own middleware functions to perform specific tasks based on your application's requirements.
+
+```javascript
+function myMiddleware(req, res, next) {
+  console.log('Custom Middleware');
+  next();
+}
+
+app.use(myMiddleware);
+```
+
 
 ## HTTP Status Codes
 
