@@ -47,9 +47,12 @@
     * [Types of middleware - express-js]()
     * []()
 * [Websockets]()
+  
 * [Coding challenges/tasks]()
     * [Sample node js application with express-js framework]()
     * [JWT Token Implementation]()
+    * [Connection to MongoDB]()
+    * [Connection to Postgresql DB]()
 
 # What is Node JS
 Node.js is a powerful, open-source, cross-platform runtime environment that allows you to execute JavaScript code outside of a web browser.
