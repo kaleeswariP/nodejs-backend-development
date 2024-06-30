@@ -1,8 +1,8 @@
 # nodejs-backend-development
 
 * [What is Node JS](https://github.com/kaleeswariP/nodejs-backend-development#what-is-node-js)
-* [Concurrency in javascript and node Js]()
-* [NPM - Node Package Manager]()
+* [Concurrency in javascript and node Js](https://github.com/kaleeswariP/nodejs-backend-development/tree/master?tab=readme-ov-file#concurrency-execution-in-node-js-and-javascript)
+* [NPM - Node Package Manager](https://github.com/kaleeswariP/nodejs-backend-development/tree/master?tab=readme-ov-file#npm---node-package-manager)
 * [Express Js framework](https://github.com/kaleeswariP/nodejs-backend-development#express-js-framework)
     * [Middleware](https://github.com/kaleeswariP/nodejs-backend-development#middleware)
     * [Routing](https://github.com/kaleeswariP/nodejs-backend-development#routing)
@@ -25,6 +25,7 @@
 
 * [APIs in NodeJS]()
   * [Http API call Structure]()
+     * [HTTP Methods]()
      * [Header]()
      * [Request]()
      * [Response]()
@@ -44,9 +45,11 @@
 * [Node JS Project]()     
 * [Real-time Scenarios]()
 * [Questions & Answers]()
-    * [Types of middleware - express-js]()
+    * [Types of middleware - express-js](https://github.com/kaleeswariP/nodejs-backend-development/tree/master?tab=readme-ov-file#1-types-of-middlewares-available-in-express-js)
     * []()
 * [Websockets]()
+
+* [Project Setup]()
   
 * [Coding challenges/tasks]()
     * [Sample node js application with express-js framework]()
@@ -1064,6 +1067,185 @@ When using WebSockets, consider security measures like encrypting the using `wss
 
 WebSockets are suitable for real-time chat applications, online gaming, live notifications, collaborative tools, and any scenario where immediate data updates are required.
 
+## Project Setup 
+In Node.js, an API (Application Programming Interface) refers to a set of endpoints exposed by a server that clients can interact with using HTTP requests. 
+
+These endpoints typically perform CRUD (Create, Read, Update, Delete) operations on resources. 
+
+Building an API in Node.js often involves using frameworks like Express.js to handle routing and middleware.
+
+**Structure of an API in Node.js**
+* Project Setup
+* Routing
+* Controllers
+* Models
+* Middleware
+* Error Handling
+* Configuration
+* Database Integration
+* Server Initialization
+
+#### Project Setup
+First, initialize a new Node.js project and install the necessary dependencies, typically Express.js and other utilities.
+
+```bash
+mkdir my-api
+cd my-api
+npm init -y
+npm install express body-parser mongoose
+```
+
+#### Routing
+Routing is the mechanism that handles incoming requests and routes them to the appropriate controller functions.
+
+```javascript
+// routes/userRoutes.js
+const express = require('express');
+const router = express.Router();
+const userController = require('../controllers/userController');
+
+router.get('/', userController.getAllUsers);
+router.post('/', userController.createUser);
+router.get('/:id', userController.getUserById);
+router.put('/:id', userController.updateUser);
+router.delete('/:id', userController.deleteUser);
+
+module.exports = router;
+```
+
+#### Controllers
+Controllers contain the logic for handling requests and returning responses. They interact with models to retrieve and manipulate data.
+
+```javascript
+// controllers/userController.js
+const User = require('../models/user');
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.createUser = async (req, res) => {
+  const user = new User(req.body);
+  try {
+    const newUser = await user.save();
+    res.status(201).json(newUser);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Other CRUD functions (getUserById, updateUser, deleteUser) follow the same pattern;
+```
+
+#### Models
+Models define the structure of the data and provide methods for interacting with the database. MongoDB and Mongoose are commonly used for database operations in Node.js.
+
+```javascript
+// models/user.js
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  age: { type: Number, required: true }
+});
+
+module.exports = mongoose.model('User', userSchema);
+```
+
+#### Middleware
+Middleware functions are functions that have access to the request and response objects. They can modify the `request`, `response`, or end the request-response cycle.
+
+```javascript
+// middleware/logger.js
+const logger = (req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+};
+
+module.exports = logger;
+```
+
+#### Error Handling
+Proper error handling is crucial for a robust API. This can be done using middleware.
+
+```javascript
+// middleware/errorHandler.js
+const errorHandler = (err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: err.message });
+};
+
+module.exports = errorHandler;
+```
+
+#### Configuration
+Configuration settings, such as environment variables and database connection strings, are usually managed in a configuration file.
+
+```javascript
+// config/config.js
+module.exports = {
+  port: process.env.PORT || 3000,
+  dbUri: process.env.DB_URI || 'mongodb://localhost:27017/myapi'
+};
+```
+
+#### Database Integration
+Connecting to the database is essential for a data-driven API.
+
+```javascript
+// database/db.js
+const mongoose = require('mongoose');
+const config = require('../config/config');
+
+mongoose.connect(config.dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+  console.log('Connected to the database');
+});
+```
+
+#### Server Initialization
+The main entry point of the application is where the server is set up and routes are connected.
+
+```javascript
+// server.js
+const express = require('express');
+const bodyParser = require('body-parser');
+const userRoutes = require('./routes/userRoutes');
+const logger = require('./middleware/logger');
+const errorHandler = require('./middleware/errorHandler');
+const db = require('./database/db');
+const config = require('./config/config');
+
+const app = express();
+
+// Middleware
+app.use(bodyParser.json());
+app.use(logger);
+
+// Routes
+app.use('/users', userRoutes);
+
+// Error handling middleware
+app.use(errorHandler);
+
+// Start server
+app.listen(config.port, () => {
+  console.log(`Server running on port ${config.port}`);
+});
+```
+
+**Conclusion**
+
+Creating an API in Node.js involves setting up the project structure, defining routes, controllers, models, and middleware, and managing configurations and database connections. This modular approach allows for scalable and maintainable code, making it easier to build and extend your application.
 
 ## Coding challenges/tasks
 
