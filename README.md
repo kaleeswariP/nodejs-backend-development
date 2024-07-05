@@ -44,6 +44,8 @@
 * [Design Patterns]()
 * [Node JS Project]()     
 * [Real-time Scenarios]()
+     * [Error handling in Node js]()
+     * [Event Emitter]()
 * [Questions & Answers]()
     * [Types of middleware - express-js](https://github.com/kaleeswariP/nodejs-backend-development/tree/master?tab=readme-ov-file#1-types-of-middlewares-available-in-express-js)
     * []()
@@ -236,6 +238,25 @@ Concurrency in JavaScript (both in the browser and Node.js) is primarily achieve
 * **Cluster and Worker Threads (Node.js):** Allow for better CPU utilization for CPU-bound tasks.
 
 # NPM - Node Package Manager
+npm (Node Package Manager) is a package manager for JavaScript, primarily used for managing packages and dependencies in Node.js projects.
+
+It is one of the most widely used tools in the JavaScript ecosystem, allowing developers to share and reuse code.
+
+* Package Management:  Packages, Reusable pieces of code (libraries or modules) that can be included in a Node.js project. 
+* Dependencies: `Package.json`, A configuration file in a Node.js project that lists the project's dependencies and other metadata like the project’s name, version, author, scripts, and more.
+* Commands:
+
+   `npm install`: Installs all the dependencies listed in the package.json file. It can also install a specific package by running `npm install <package-name>`.
+   `npm init`: Creates a new `package.json` file, guiding you through the initial setup of the file.
+   `npm publish`: Publishes a package to the npm registry.
+   `npm update`: Updates the installed packages to the latest versions that satisfy the version ranges specified in the `package.json` file.
+   `npm uninstall`: Removes a package from your project.
+
+* Versioning: Semantic Versioning (SemVer): npm uses SemVer to manage package versions. Version numbers follow the format `**MAJOR.MINOR.PATCH**` `(e.g., 1.0.0)`. Changes in the version number indicate the level of changes in the package `(major, minor, or patch)`.
+
+* Scripts: **custom Scripts**: Developers can define custom scripts in the `package.json` file to automate tasks like running tests, building the project, or deploying the application. For example, `"scripts": { "start": "node app.js" }` allows you to start your application with `npm start`.
+
+
 
 # Express JS framework
 
@@ -887,6 +908,128 @@ process.stdin.pipe(writable);
 
 # Real-time Scenarios:
 
+## Event Emitters use cases
+
+EventEmitter in Node.js is a powerful tool for implementing event-driven architecture, which is useful in a wide range of real-time scenarios.
+
+1. Real-Time Chat Applications: EventEmitters can handle user connections, message broadcasting, and user disconnections, enabling real-time communication among users.
+
+2. Real-Time Notifications: EventEmitters can be used to send real-time notifications in web applications, such as updates, alerts, or messages. e.g.,
+      * Stock Price Alerts: Emit events when stock prices reach certain thresholds, notifying users immediately.
+      * System Alerts: Emit events for system updates, errors, or critical events, alerting administrators or users.
+
+3. Monitoring and Logging: EventEmitters can be used to monitor system performance, errors, and other events, and log them for analysis.
+      * Performance Monitoring: Emit events for CPU, memory usage, and other performance metrics, logging these events for future analysis.
+      * Error Handling: Emit events for application errors, logging error details for debugging and monitoring.
+
+4. Streaming Data Processing: EventEmitters can handle real-time data streams, such as from sensors, IoT devices, or social media feeds.
+      * Social Media Feeds: Emit events for new posts, tweets, or comments, updating the application in real-time.
+
+5. Real-Time Data Sync: EventEmitters can synchronize data between multiple systems or databases in real-time.
+      * Database Replication: Emit events when data changes in one database, replicating these changes to another database.
+      * File Sync: Emit events when files are modified, ensuring synchronized copies across different servers or storage systems
+
+6. User Activity Tracking: EventEmitters can track and respond to user activities in real-time, such as clicks, form submissions, or navigation.
+
+7. Real-Time Auctions or Bidding Systems: EventEmitters can manage real-time events in auction systems, such as new bids, auction start/end times, and price updates.
+
+
+**Example Implementation: Real-Time Notification System**
+
+Step 1: Setup Project
+```sh
+mkdir real-time-notifications
+cd real-time-notifications
+npm init -y
+npm install express socket.io
+```
+Step 2: Create server.js
+```javascript
+const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
+const EventEmitter = require('events');
+
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
+const notificationEmitter = new EventEmitter();
+
+const port = 3000;
+
+// Serve static files
+app.use(express.static('public'));
+
+// Listen for client connections
+io.on('connection', (socket) => {
+  console.log('A user connected');
+
+  // Emit welcome notification
+  notificationEmitter.emit('welcome', socket);
+
+  // Listen for custom events
+  socket.on('customEvent', (data) => {
+    notificationEmitter.emit('customNotification', socket, data);
+  });
+
+  // Handle user disconnection
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
+});
+
+// Custom event listeners
+notificationEmitter.on('welcome', (socket) => {
+  socket.emit('notification', 'Welcome to the real-time notification system!');
+});
+
+notificationEmitter.on('customNotification', (socket, data) => {
+  io.emit('notification', `New notification: ${data.message}`);
+});
+
+server.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+
+```
+
+Step 3: Create public/index.html
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Real-Time Notifications</title>
+</head>
+<body>
+  <h1>Real-Time Notifications</h1>
+  <div id="notifications"></div>
+  <input id="messageInput" type="text" placeholder="Type a message..." />
+  <button onclick="sendMessage()">Send</button>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    socket.on('notification', (message) => {
+      const notificationsDiv = document.getElementById('notifications');
+      const notificationElement = document.createElement('p');
+      notificationElement.innerText = message;
+      notificationsDiv.appendChild(notificationElement);
+    });
+
+    function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const message = input.value;
+      socket.emit('customEvent', { message });
+      input.value = '';
+    }
+  </script>
+</body>
+</html>
+
+```
+
+
+
 # Questions & Answers
 
 ## 1. Types of middlewares available in express-js
@@ -980,8 +1123,191 @@ function myMiddleware(req, res, next) {
 app.use(myMiddleware);
 ```
 
+## APIs in Node JS
 
-## HTTP Status Codes
+* [APIs in NodeJS]()
+  * [Http API call Structure]()
+     * [HTTP Methods]()
+     * [Header]()
+     * [Request]()
+     * [Response]()
+     * [Status codes]()
+
+### HTTP Header
+
+HTTP headers are key-value pairs sent between the client and the server in an HTTP request or response. 
+
+They convey information about the request or response, or about the object sent in the body of the HTTP message.
+
+**Common HTTP Headers:**<br>
+
+* General Headers: Applicable to both request and response messages, but with no relation to the data in the body.
+* Request Headers: Contain information about the resource to be fetched or about the client itself.
+* Response Headers: Contain additional information about the response, like its location or about the server itself.
+* Entity Headers: Contain information about the body of the resource, like its content length or MIME type.
+
+#### General Headers
+
+1. Cache-Control: Directives for caching mechanisms in both requests and responses.
+
+      * `Cache-Control: no-cache`: Forces caches to submit the request to the origin server for validation before releasing a cached copy.
+
+      * `Cache-Control: no-store`: The cache should not store anything about the client request or server response.
+      * `Cache-Control: max-age=3600`: The response can be cached for 3600 seconds (1 hour).
+  
+2. Connection: Control options for the current connection.
+
+      * `Connection: keep-alive`: The client wants to keep the connection open.
+      * `Connection: close`: The client wants to close the connection after the current transaction.
+
+3. Date: The date and time at which the message was originated.
+
+      * `Date: Tue, 15 Nov 1994 08:12:31 GMT`
+
+
+#### Request Headers
+
+1. `Accept`: The acceptable media types for the response.
+
+      * `Accept: text/html`: The client accepts an HTML response.
+      * `Accept: application/json`: The client accepts a JSON response.
+2. Authorization: Contains the credentials to authenticate a user-agent with a server.
+
+      * `Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==`: Basic access authentication.
+      * `Authorization: Bearer <token>`: Bearer token for OAuth.
+
+3. Content-Type: The media type of the body of the request (used with POST and PUT requests).
+
+      * `Content-Type: application/json`: The request body format is JSON.
+      * `Content-Type: multipart/form-data`: Used for file uploads.
+
+4. User-Agent: Contains information about the user agent originating the request.
+
+      * `User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3`
+
+5. Host: Specifies the domain name of the server and `(optionally)` the TCP port number on which the server is listening.
+
+      * `Host: www.example.com`
+6. Referer: The address of the previous web page from which a link to the currently requested page was followed.
+
+      * `Referer: https://www.google.com`
+
+
+#### Response Headers
+
+1. Content-Type: The media type of the body of the response.
+
+      * `Content-Type: text/html; charset=UTF-8`
+      * `Content-Type: application/json`
+2. Content-Length: The size of the response body in bytes.
+
+      * `Content-Length: 348`
+3. Server: Contains information about the software used by the origin server to handle the request.
+
+      * `Server: Apache/2.4.1 (Unix)`
+4. Set-Cookie: Sends cookies from the server to the user agent.
+
+      * `Set-Cookie: userID=JohnDoe; Max-Age=3600; Version=1`
+5. Location: Used in redirection or when a new resource has been created.
+
+      * Location: https://www.example.com/newpage
+
+#### Entity Headers
+
+
+1. Content-Encoding: The type of encoding used on the data.
+
+      * `Content-Encoding: gzip`
+2. Content-Language: The natural language or languages of the intended audience.
+
+      * `Content-Language: en-US`
+3. Content-Length: The size of the entity-body, in decimal number of octets.
+
+      * `Content-Length: 3495`
+4. Content-Location: An alternate location for the returned data.
+
+      * `Content-Location: /index.html`
+5. Content-Disposition: Indicates if the content is expected to be displayed inline in the browser, or as an attachment, that is downloaded and saved locally.
+
+      * `Content-Disposition: attachment; filename="filename.jpg"`
+
+### Request Object(`req`)
+The request object in an HTTP call encapsulates all the information about the incoming request. This includes details about the request method `(GET, POST, etc.)`, URL, headers, query parameters, body, and more.
+
+Key Properties and Methods of the Request Object:
+
+1. req.method: Contains the HTTP method of the request `(e.g., GET, POST, PUT, DELETE)`.
+2. req.url: Contains the full URL of the request.
+3. req.headers: An object containing the request headers.
+4. req.query: An object containing the parsed query string parameters.
+5. req.params: An object containing route parameters.
+6. req.body: An object containing the parsed body of the request. This requires middleware like `express.json()` or `express.urlencoded()` to parse the body.
+7. req.cookies: An object containing cookies sent by the client. Requires middleware like `cookie-parser`.
+
+
+```javascript
+console.log(req.method); // Output: GET
+console.log(req.url); // Output: /users?name=John
+console.log(req.headers['user-agent']); // Output: Mozilla/5.0
+console.log(req.query); // Output: { name: 'John', age: '30' }
+console.log(req.params); // Output: { id: '123' }
+console.log(req.body); // Output: { name: 'John' }
+console.log(req.cookies); // Output: { sessionId: 'xyz123' }
+
+const express = require('express');
+const app = express();
+
+app.use(express.json()); // Middleware to parse JSON bodies
+
+app.get('/users', (req, res) => {
+  console.log(req.query); // Query parameters
+  res.send('Users endpoint');
+});
+
+app.get('/users/:id', (req, res) => {
+  console.log(req.params); // Route parameters
+  res.send(`User ID: ${req.params.id}`);
+});
+
+app.post('/users', (req, res) => {
+  console.log(req.body); // Request body
+  res.send('User created');
+});
+
+app.listen(3000, () => {
+  console.log('Server running on port 3000');
+});
+
+```
+
+### Response Object(`res`)
+
+The `response` object in an HTTP call encapsulates all the information needed to send a response back to the client. This includes methods for setting headers, sending status codes, and sending response bodies.
+
+Key Properties and Methods of the Response Object:
+
+1. res.status(code): Sets the HTTP status code for the response.
+2. res.set(header, value): Sets a response header.
+3. res.json(data): Sends a JSON response. This method sets the `Content-Type` header to `application/json`.
+4. res.send(data): Sends a response. The data can be a string, buffer, or object.
+5. res.sendFile(path): Sends a file as an octet stream.
+6. res.redirect(url): Redirects the request to the specified URL
+7. res.cookie(name, value, options): Sets a cookie in the response.
+
+
+```javascript
+res.status(404).send('Not Found');
+res.set('Content-Type', 'application/json');
+res.send('Hello World');
+res.sendFile('/path/to/file');
+res.redirect('/new-url');
+res.cookie('sessionId', 'xyz123', { maxAge: 900000, httpOnly: true });
+res.clearCookie('sessionId');
+
+```
+
+
+### HTTP Status Codes
 
 **CheatSheet**
 ![image](https://github.com/kaleeswariP/nodejs-guidelines/assets/22699303/b506fe12-c9f1-487b-9b43-f7121643d3c7)
