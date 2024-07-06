@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 require('dotenv').config(); // environment config
 const connectDB = require('./db/connect');
 
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
+const tasks = require('./routes/tasks');
 
 
 // Default values
@@ -14,10 +16,10 @@ const port = process.env.PORT || 5000;
 
 app.use(express.static('./public')); // The express.static() function is a built-in middleware function in Express. It serves static files and is based on serve-static. 
 app.use(express.json()); //  It parses incoming requests with JSON payloads and is based on body-parser. 
-
+app.use(cors());
 
 // routes
-// app.use('/api/v1/tasks', tasks);
+app.use('/api/v1/tasks', tasks);
 
 // custom middlewares
 app.use(notFoundMiddleware);
