@@ -42,7 +42,8 @@
    * [stream](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#stream-module-stream)
 
 * [Design Patterns]()
-* [Node JS Project]()     
+* [Node JS Project]()
+     * [Micro services architecture]()  
 * [Real-time Scenarios]()
      * [Error handling in Node js]()
      * [Event Emitter]()
