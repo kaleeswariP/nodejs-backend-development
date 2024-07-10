@@ -23,13 +23,13 @@
   * [Worker Threads/processes]()
   * [Cluster Module]()
 
-* [APIs in NodeJS]()
-  * [Http API call Structure]()
-     * [HTTP Methods]()
-     * [Header]()
-     * [Request]()
-     * [Response]()
-     * [Status codes]()
+* [APIs in NodeJS](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#apis-in-node-js)
+  * Http API call Structure
+     * [HTTP Methods](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#different-types-of-apis)
+     * [Header](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#http-header)
+     * [Request](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#request-objectreq)
+     * [Response](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#response-objectres)
+     * [Status codes](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#http-status-codes)
       
 * [Core Modules]()
    * [HTTP](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#http-http)
@@ -41,22 +41,25 @@
    * [crypto](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#crypto-module-crypto)
    * [stream](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#stream-module-stream)
 
-* [Design Patterns]()
-* [Node JS Project]()
-     * [Micro services architecture]()  
-* [Real-time Scenarios]()
+
+* [Real-time Scenarios](https://github.com/kaleeswariP/nodejs-backend-development#real-time-scenarios)
      * [Error handling in Node js]()
-     * [Event Emitter]()
+     * [Event Emitter](https://github.com/kaleeswariP/nodejs-backend-development#event-emitters-use-cases)
+
+       
 * [Questions & Answers]()
     * [Types of middleware - express-js](https://github.com/kaleeswariP/nodejs-backend-development/tree/master?tab=readme-ov-file#1-types-of-middlewares-available-in-express-js)
     * []()
-* [Websockets]()
+* [Websockets](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#web-sockets)
 
-* [Project Setup]()
+* [Project Setup](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#project-setup)
+* [Design Patterns]()
+* [Micro services architecture]()
+       
   
-* [Coding challenges/tasks]()
-    * [Sample node js application with express-js framework]()
-    * [JWT Token Implementation]()
+* [Coding challenges/tasks](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#coding-challengestasks)
+    * [Sample node js application with express-js framework](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#node-js-simple-application)
+    * [JWT Token Implementation](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#jwt-token-implementation)
     * [Connection to MongoDB]()
     * [Connection to Postgresql DB]()
 
@@ -1126,13 +1129,12 @@ app.use(myMiddleware);
 
 ## APIs in Node JS
 
-* [APIs in NodeJS]()
-  * [Http API call Structure]()
-     * [HTTP Methods]()
-     * [Header]()
-     * [Request]()
-     * [Response]()
-     * [Status codes]()
+  * **Http API call Structure**
+     * [HTTP Methods](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#different-types-of-apis)
+     * [Header](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#http-header)
+     * [Request](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#request-objectreq)
+     * [Response](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#response-objectres)
+     * [Status codes](https://github.com/kaleeswariP/nodejs-backend-development?tab=readme-ov-file#http-status-codes)
 
 ### HTTP Header
 
